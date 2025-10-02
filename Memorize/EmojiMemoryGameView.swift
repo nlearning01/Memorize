@@ -29,6 +29,9 @@ struct EmojiMemoryGameView: View {
                  CardView(card)
                      .aspectRatio(2/3, contentMode: .fit)
                      .padding(2)
+                     .onTapGesture {
+                         viewModel.choose(card)
+                     }
              }
          }
          .foregroundColor(.orange)
@@ -57,15 +60,11 @@ struct EmojiMemoryGameView: View {
                  base.fill()
                      .opacity(card.isFaceUp ? 0 : 1)
              }
+             .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
          }
      }
-     
-     struct Theme {
-         let name: String
-         let emojis: [String]
-         let color: Color
-     }
  }
+
  #Preview {
      EmojiMemoryGameView(viewModel: EmojiMemoryGame())
  }
