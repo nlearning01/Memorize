@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct EmojiMemoryGameView: View {
     
     @State var currentTheme = Theme(
         name: "Halloween",
@@ -129,5 +129,5 @@ struct Theme {
 }
 
 #Preview {
-    ContentView()
+    EmojiMemoryGameView()
 }
