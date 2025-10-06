@@ -36,13 +36,13 @@ class EmojiMemoryGame: ObservableObject {
         ),
         Theme(
             name: "Vehicles",
-            emojis: ["🚗", "🚕", "🚎", "🏎️", "🏍️", "🛴", "🛵", "🛩️", "🛸", "⛵️"],
+            emojis: ["🚗", "🚕", "🚎", "🏎️", "🏍️", "🛴", "🛵", "🛩️", "🛸", "⛵️", "🛶"],
             numberOfPairs: 6,
             color: "gray"
         ),
         Theme(
             name: "Flags",
-            emojis: ["🏴‍☠️", "🇦🇺", "🇧🇾", "🇧🇷", "🇨🇱", "🇧🇪", "🇮🇹", "🇰🇷", "🇷🇺"],
+            emojis: ["🏴‍☠️", "🇦🇺", "🇧🇾", "🇧🇷", "🇨🇱", "🇧🇪", "🇮🇹", "🇰🇷", "🇷🇺", "🇧🇸", "🇦🇱", "🇨🇭"],
             numberOfPairs: 6,
             color: "red"
         )

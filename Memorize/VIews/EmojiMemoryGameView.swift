@@ -34,7 +34,7 @@ struct EmojiMemoryGameView: View {
     var cards: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0) {
             ForEach(viewModel.cards) { card in
-                CardView(card)
+                CardView(card, viewModel.themeColor)
                     .aspectRatio(2/3, contentMode: .fit)
                     .padding(2)
                     .onTapGesture {
@@ -48,9 +48,11 @@ struct EmojiMemoryGameView: View {
     
     struct CardView: View {
         var card: MemoryGame<String>.Card
+        var themeColor: Color
         
-        init(_ card: MemoryGame<String>.Card) {
+        init(_ card: MemoryGame<String>.Card, _ themeColor: Color) {
             self.card = card
+            self.themeColor = themeColor
         }
         
         var body: some View {
@@ -65,7 +67,7 @@ struct EmojiMemoryGameView: View {
                         .aspectRatio(1, contentMode: .fit)
                 }
                 .opacity(card.isFaceUp ? 1 : 0)
-                base.fill()
+                base.fill(themeColor)
                     .opacity(card.isFaceUp ? 0 : 1)
             }
             .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
