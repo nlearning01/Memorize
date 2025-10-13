@@ -8,73 +8,87 @@
 import SwiftUI
 
 struct EmojiMemoryGameView: View {
+    
     @ObservedObject var viewModel: EmojiMemoryGame
+    var themeID: UUID
     
     var body: some View {
         VStack {
-            Text("Score: \(viewModel.score)")
-                .font(.largeTitle)
             ScrollView {
                 cards
                     .animation(.default, value: viewModel.cards)
             }
             HStack {
+                Spacer()
+                Text("Score: \(viewModel.score)")
+                    .foregroundColor(viewModel.score>=0 ? .green: .red)
+                
+                Spacer()
+                Button("New Game") {
+                    viewModel.newGame(themeID: themeID)
+                }
+                Spacer()
                 Button("Shuffle") {
                     viewModel.shuffle()
                 }
                 Spacer()
-                Button("New game") {
-                    viewModel.newGame()
-                }
             }
+            .font(.title2)
+            
         }
         .padding()
+        .navigationTitle(viewModel.theme.name)
+        .frame(maxWidth: .infinity)
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum:85), spacing:  0)], spacing: 0){
             ForEach(viewModel.cards) { card in
-                CardView(card, viewModel.themeColor)
+                CardView(card)
                     .aspectRatio(2/3, contentMode: .fit)
-                    .padding(2)
+                    .padding(4)
                     .onTapGesture {
                         viewModel.choose(card)
                     }
             }
         }
-        .foregroundColor(.orange)
-    }
-    
-    
-    struct CardView: View {
-        var card: MemoryGame<String>.Card
-        var themeColor: Color
-        
-        init(_ card: MemoryGame<String>.Card, _ themeColor: Color) {
-            self.card = card
-            self.themeColor = themeColor
-        }
-        
-        var body: some View {
-            ZStack {
-                let base = RoundedRectangle(cornerRadius: 12)
-                Group {
-                    base.fill(.white)
-                    base.strokeBorder(lineWidth: 2)
-                    Text(card.content)
-                        .font(.system(size: 200))
-                        .minimumScaleFactor(0.01)
-                        .aspectRatio(1, contentMode: .fit)
-                }
-                .opacity(card.isFaceUp ? 1 : 0)
-                base.fill(themeColor)
-                    .opacity(card.isFaceUp ? 0 : 1)
-            }
-            .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
-        }
+        .foregroundColor(Color(rgba: viewModel.theme.color))
     }
 }
 
-#Preview {
-    EmojiMemoryGameView(viewModel: EmojiMemoryGame())
+
+
+
+
+struct CardView: View {
+    let card: MemoryGame<String>.Card
+    
+    init(_ card: MemoryGame<String>.Card) {
+        self.card = card
+    }
+    
+    var body: some View {
+        ZStack {
+            let base: RoundedRectangle = RoundedRectangle(cornerRadius: 12)
+            Group {
+                base.fill(.white)
+                base.strokeBorder(lineWidth: 2)
+                Text(card.content)
+                    .font(.system(size: 200))
+                    .minimumScaleFactor(0.01)
+                    .aspectRatio(1, contentMode: .fit)
+            }
+            .opacity(card.isFaceUp ? 1 : 0)
+            base.fill().opacity(card.isFaceUp ? 0: 1)
+            
+        }
+        .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
+    }
 }
+
+
+#Preview {
+    EmojiMemoryGameView(viewModel: EmojiMemoryGame(themeID: ThemeChooser().themes[0].id, themeChooser: ThemeChooser()),themeID: ThemeChooser().themes[0].id)
+}
+
