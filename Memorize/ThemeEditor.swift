@@ -73,7 +73,7 @@ struct ThemeEditor: View {
 
 struct ThemeEditor_Previews: PreviewProvider {
     struct Preview: View {
-        @State private var theme = ThemeStore.Theme(name: "123", emojis: "🚲🏀🏸⛹️‍♀️🎾🏓🏑⚾️🏈🏊‍♀️🏄🏿‍♀️🚵", nPairs: 3, color: RGBA(color: .black))
+        @State private var theme = ThemeStore.Theme(name: "Theme", emojis: "🚲🏀🏸⛹️‍♀️🎾🏓🏑⚾️🏈🏊‍♀️🏄🏿‍♀️🚵", nPairs: 3, color: RGBA(color: .black))
         var body: some View {
             ThemeEditor(theme: $theme)
         }
